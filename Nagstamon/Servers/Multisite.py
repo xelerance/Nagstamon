@@ -26,7 +26,7 @@ import time
 import copy
 import html
 from datetime import datetime
-from tzlocal import get_localzone
+from zoneinfo import ZoneInfo
 
 from Nagstamon.Objects import (GenericHost,
                                GenericService,
@@ -548,8 +548,8 @@ class MultisiteServer(GenericServer):
             }
 
             # Only timezone aware dates are allowed
-            iso_start_time =  datetime.strptime(start_time, "%Y-%m-%d %H:%M").replace(tzinfo=get_localzone()).isoformat()
-            iso_end_time =  datetime.strptime(end_time, "%Y-%m-%d %H:%M").replace(tzinfo=get_localzone()).isoformat()
+            iso_start_time =  datetime.strptime(start_time, "%Y-%m-%d %H:%M").replace(tzinfo=ZoneInfo('localtime')).isoformat()
+            iso_end_time =  datetime.strptime(end_time, "%Y-%m-%d %H:%M").replace(tzinfo=ZoneInfo('localtime')).isoformat()
             # Set parameters for host downtimes
             url = self.urls["omd_host_downtime"]
             params = {
